@@ -1,11 +1,15 @@
 cask "corsair-icue" do
-  version "3.31.81"
-  sha256 "145de1e104bcd3be82064b9251090bab618bfb51aeb60206a514ef816df8c174"
+  version "4.12.214"
+  sha256 "b8260c797f86bcc0d35a15c1d94e53ae5e8e6bc5d01b6ea0f483afa14edb19bc"
 
   url "https://downloads.corsair.com/Files/CUE/iCUE-#{version}-release.dmg"
-  appcast "https://www.corsair.com/us/en/downloads/search?searchCategory=Cor_Products_iCue_Compatibility"
   name "Corsair iCUE"
+  desc "Software for Corsair components and devices"
   homepage "https://www.corsair.com/us/en/icue"
+
+  livecheck do
+    skip "Download page uses Imperva/Incapsula"
+  end
 
   depends_on macos: ">= :high_sierra"
 
@@ -13,17 +17,17 @@ cask "corsair-icue" do
 
   uninstall launchctl: [
     "com.corsair.AudioConfigService.System",
-    "com.corsair.cue.3.launchHelper",
+    "com.corsair.cue.#{version.major}.launchHelper",
   ],
             quit:      [
               "com.corsair.cue.*",
               "org.qt-project.*",
             ],
-            script:    [
-              { executable: "/usr/bin/osascript",
-                args:       ["#{appdir}/Corsair/iCUEUninstaller.app/Contents/Scripts/uninstall.scpt"],
-                sudo:       true },
-            ],
+            script:    {
+              executable: "/usr/bin/osascript",
+              args:       ["#{appdir}/Corsair/iCUEUninstaller.app/Contents/Scripts/uninstall.scpt"],
+              sudo:       true,
+            },
             pkgutil:   [
               "com.corsair.CorsairAudio",
               "com.corsair.cue.*",
@@ -39,8 +43,8 @@ cask "corsair-icue" do
     "~/Library/Application Support/Corsair",
     "~/Library/Caches/Corsair",
     "~/Library/Caches/iCUEUninstaller",
-    "~/Library/Preferences/com.corsair.cue.3.plist",
-    "~/Library/Saved Application State/com.corsair.cue.3.cue_unistaller.savedState",
-    "~/Library/Saved Application State/com.corsair.cue.3.savedState",
+    "~/Library/Preferences/com.corsair.cue.#{version.major}.plist",
+    "~/Library/Saved Application State/com.corsair.cue.#{version.major}.cue_unistaller.savedState",
+    "~/Library/Saved Application State/com.corsair.cue.#{version.major}.savedState",
   ]
 end

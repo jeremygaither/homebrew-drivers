@@ -1,14 +1,19 @@
 cask "elecom-mouse-assistant" do
-  version "5.1.14.003"
-  sha256 "91cb66dc584fabdb4e70cdba7d3aefe4c3046e4205891ca5bd80cf4f381a073b"
+  version "5.2.2.002"
+  sha256 "eb0e6679efc3a71ea617b2e610a06bf535eada8816ff7e274f70f66e22b65341"
 
-  # dl.elecom.co.jp was verified as official when first introduced to the cask
   url "https://dl.elecom.co.jp/support/download/peripheral/mouse/assistant/mac/ELECOM_Mouse_Installer_#{version}.zip"
-  appcast "https://www.elecom.co.jp.e.gj.hp.transer.com/global/download-list/utility/mouse_assistant/mac/"
   name "ELECOM Mouse Assistant"
-  homepage "https://www.elecom.co.jp.e.gj.hp.transer.com/global/download-list/utility/mouse_assistant/"
+  desc "Software to more effectively use an ELECOM mouse"
+  homepage "https://www.elecom.co.jp/global/download-list/utility/mouse_assistant/"
 
-  container nested: "ELECOM_Mouse_Installer_#{version}.dmg"
+  livecheck do
+    url "https://www.elecom.co.jp/global/download-list/utility/mouse_assistant/mac/"
+    strategy :page_match
+    regex(/ELECOM_Mouse_Installer_(\d+(?:\.\d+)*)\.zip/i)
+  end
+
+  depends_on macos: ">= :el_capitan"
 
   pkg "ELECOM_Mouse_Installer_#{version}.pkg"
 

@@ -1,11 +1,16 @@
 cask "yubico-yubikey-manager" do
-  version "1.1.5"
-  sha256 "7b66abdb3daa90428596501a4e733a1714ba3a017f3c09a2fa00304a1afdedaa"
+  version "1.2.3"
+  sha256 "637145d14c98ee427b77bb32c7d05c6804d1775a03e84b982aa9775a8473b527"
 
   url "https://developers.yubico.com/yubikey-manager-qt/Releases/yubikey-manager-qt-#{version}-mac.pkg"
-  appcast "https://github.com/Yubico/yubikey-manager-qt/releases.atom"
   name "Yubikey Manager"
+  desc "Application for configuring any YubiKey"
   homepage "https://developers.yubico.com/yubikey-manager-qt/"
+
+  livecheck do
+    url "https://developers.yubico.com/yubikey-manager-qt/Releases/"
+    regex(/href=.*?yubikey[._-]manager[._-]qt[._-]v?(\d+(?:\.\d+)+[a-z]?)[._-]mac\.pkg/i)
+  end
 
   depends_on macos: ">= :sierra"
 

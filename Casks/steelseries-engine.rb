@@ -1,15 +1,20 @@
 cask "steelseries-engine" do
-  version "3.18.3"
-  sha256 "253bc295963b7671ef02bc60ebe8e56dfa6dff7260421df8bf75846f00b56f19"
+  version "3.22.0"
+  sha256 "14267eeee45fbd95b9ee5ca49c3b2d33957ce5f088a455a74ccb48213310ce8f"
 
-  # steelseriescdn.com/ was verified as official when first introduced to the cask
-  url "https://downloads.steelseriescdn.com/drivers/engine/SteelSeriesEngine#{version}.pkg"
-  appcast "https://steelseries.com/engine"
+  url "https://downloads.steelseriescdn.com/drivers/engine/SteelSeriesEngine#{version}.pkg",
+      verified: "steelseriescdn.com/"
   name "SteelSeries Engine #{version.major}"
+  desc "Settings for SteelSeries peripherals and accessories"
   homepage "https://steelseries.com/engine"
 
-  auto_updates
-  depends_on macos: ">= :yosemite"
+  livecheck do
+    url "https://steelseries.com/engine/latest/darwin"
+    strategy :header_match
+  end
+
+  auto_updates true
+  depends_on macos: ">= :sierra"
 
   pkg "SteelSeriesEngine#{version}.pkg"
 

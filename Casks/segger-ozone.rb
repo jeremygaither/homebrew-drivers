@@ -1,11 +1,17 @@
 cask "segger-ozone" do
-  version "3.20c"
-  sha256 "711dc249ab4753dda095a22208bfddd2dc736be9dc376a499d8e238cdc61825d"
+  version "3.22e"
+  sha256 "86e5e0c8561dc68f867f013beacb27b76da3a68178a25d5d609179b0b4502e98"
 
   url "https://www.segger.com/downloads/jlink/Ozone_MacOSX_V#{version.no_dots}_Universal.pkg"
-  appcast "https://www.segger.com/downloads/jlink/ReleaseNotes_Ozone.html"
   name "Ozone"
+  desc "J-Link Debugger and Performance Analyzer"
   homepage "https://www.segger.com/products/development-tools/ozone-j-link-debugger"
+
+  livecheck do
+    url "https://www.segger.com/downloads/jlink/ReleaseNotes_Ozone.html"
+    strategy :page_match
+    regex(/<h2>Version\s*(\d+(?:\.\d+)*[a-z]?)/i)
+  end
 
   pkg "Ozone_MacOSX_V#{version.no_dots}_Universal.pkg"
 

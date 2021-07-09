@@ -9,15 +9,11 @@ cask "nvidia-web-driver" do
     version "378.05.05.25f13"
     sha256 "f5849297ee8a4a754f26d998db83878d4c02324db00ec28ab38da1d847d7e5c1"
   else
-    version "387.10.10.10.40.133"
-    sha256 "8da5044ea8ecd8f3371e77dd1f46a47b8ce167ed27a9c22b196a741e937c4f3a"
+    version "387.10.10.10.40.140"
+    sha256 "a877c0ef81fbbb4d42bee6c1de063fff47d610a5397ffc6ce7617f28269bfe73"
   end
 
-  module Utils
-    def self.basename
-      "/Library/PreferencePanes/NVIDIA Driver Manager.prefPane/Contents/MacOS/NVIDIA Web Driver Uninstaller.app/Contents/Resources"
-    end
-  end
+  basename = "/Library/PreferencePanes/NVIDIA Driver Manager.prefPane/Contents/MacOS/NVIDIA Web Driver Uninstaller.app/Contents/Resources"
 
   url "https://images.nvidia.com/mac/pkg/#{version.major}/WebDriver-#{version}.pkg"
   appcast "https://gfe.nvidia.com/mac-update"
@@ -35,7 +31,7 @@ cask "nvidia-web-driver" do
 
   uninstall_preflight do
     system_command "/usr/sbin/pkgutil",
-                   args: ["--expand", "#{Utils.basename}/NVUninstall.pkg", "#{Utils.basename}/NVUninstall"],
+                   args: ["--expand", "#{basename}/NVUninstall.pkg", "#{basename}/NVUninstall"],
                    sudo: true
   end
 
@@ -54,7 +50,7 @@ cask "nvidia-web-driver" do
               "com.nvidia.web.NVDA*Web",
             ],
             script:    [ # Only the third argument is used and should be the system's root path
-              { executable: "#{Utils.basename}/NVUninstall/Scripts/postinstall",
+              { executable: "#{basename}/NVUninstall/Scripts/postinstall",
                 args:       ["/", "/", "/"],
                 sudo:       true },
             ],

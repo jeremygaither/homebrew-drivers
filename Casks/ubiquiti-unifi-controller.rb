@@ -1,13 +1,17 @@
 cask "ubiquiti-unifi-controller" do
-  version "5.14.22"
-  sha256 "5dddf573c9034a12a5e3df38f36988ef03d5aac63224f1d2da4904d2b6b24b4d"
+  version "6.2.26"
+  sha256 "8aab9fba3963f97186e86dcd3ee292932e2bbfeb8146d9421c2d5def1014c1a2"
 
-  # dl.ubnt.com/ was verified as official when first introduced to the cask
-  url "https://dl.ubnt.com/unifi/#{version}/UniFi.pkg"
-  appcast "https://www.ui.com/download/unifi",
-          must_contain: :no_check
+  url "https://dl.ubnt.com/unifi/#{version}/UniFi.pkg",
+      verified: "dl.ubnt.com/"
   name "Ubiquiti UniFi Network Controller"
+  desc "Set up, configure, manage and analyze your UniFi network"
   homepage "https://unifi-sdn.ui.com/"
+
+  livecheck do
+    url "https://fw-update.ubnt.com/api/firmware-latest?filter=eq~~product~~unifi-controller&filter=eq~~channel~~release&filter=eq~~platform~~macos"
+    regex(/"version"\s*:\s*"v?(\d+(?:\.\d+)+)/i)
+  end
 
   conflicts_with cask: "ubiquiti-unifi-controller-lts"
 

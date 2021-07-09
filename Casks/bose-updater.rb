@@ -1,11 +1,17 @@
 cask "bose-updater" do
-  version "6.0.0.4454"
-  sha256 "4b19a953bb3d407f65e7c58fca8e53b9b087d7d38fd0e634f0dbd93003352efb"
+  version "7.0.31.4997"
+  sha256 "1687b9d5dfb98961e1124dd92cfeab577d8131613c5690aca67e8cd335129273"
 
   url "https://downloads.bose.com/ced/boseupdater/mac/BoseUpdater_#{version}.dmg"
-  appcast "https://btu.bose.com/data/MUV.xml"
   name "Bose Device Updater"
+  desc "Software updates for Bose products"
   homepage "https://btu.bose.com/"
+
+  livecheck do
+    url "https://btu.bose.com/data/MUV.xml"
+    strategy :page_match
+    regex(/ROOT\sMUV="(\d+(?:.\d+)*)"/i)
+  end
 
   app "Bose Updater.app"
 

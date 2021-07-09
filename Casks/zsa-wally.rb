@@ -1,12 +1,17 @@
 cask "zsa-wally" do
-  version "2.0.0"
-  sha256 "b07a27738d9a462a32167c4d237fb3eb62a9221cc72686243eb13727cecbd1e2"
+  version "2.1.0"
+  sha256 "23f2770744800ba2af2f33caa297c6621a6610c4999ad0d3cf7673a5060c2a44"
 
-  # github.com/zsa/wally/ was verified as official when first introduced to the cask
-  url "https://github.com/zsa/wally/releases/download/#{version}-osx/wally-osx-#{version}.dmg"
-  appcast "https://github.com/zsa/wally/releases.atom"
+  url "https://github.com/zsa/wally/releases/download/#{version}-osx/wally-osx-#{version}.dmg",
+      verified: "github.com/zsa/wally/"
   name "Wally"
+  desc "Flash tool for ZSA keyboards"
   homepage "https://ergodox-ez.com/pages/wally"
+
+  livecheck do
+    url "https://configure.ergodox-ez.com/wally/osx"
+    strategy :header_match
+  end
 
   app "Wally.app"
 end

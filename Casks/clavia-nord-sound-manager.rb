@@ -1,11 +1,17 @@
 cask "clavia-nord-sound-manager" do
-  version "7.54"
-  sha256 "6a58ef7ddbc5f5c40d278bf91b63331e5ee435e6faa2ec3dfb4eff22d9bc3061"
+  version "7.56"
+  sha256 "281b2cb6270da39d34797a5c7f2028446977d72cdc16cd8db016b329fddda7d9"
 
   url "https://www.nordkeyboards.com/sites/default/files/files/downloads/software/nord-sound-manager/Nord%20Sound%20Manager%20v#{version}.dmg"
-  appcast "https://www.nordkeyboards.com/software-tools/nord-sound-manager/update-history"
   name "Clavia Nord Sound Manager"
+  desc "Organize and backup the memory of your Nord instrument"
   homepage "https://www.nordkeyboards.com/downloads/software-tools/nord-sound-manager"
+
+  livecheck do
+    url :homepage
+    strategy :page_match
+    regex(%r{href=.*?/Nord%20Sound%20Manager%20v?(\d+(?:\.\d+)*)\.dmg}i)
+  end
 
   app "Nord Sound Manager v#{version}.app"
 

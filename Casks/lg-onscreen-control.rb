@@ -1,11 +1,18 @@
 cask "lg-onscreen-control" do
-  version "3.92,rCDUZKRByWjQrUfEgDWBQ"
-  sha256 "3329fdc4c2d36e1f45bf421c90cca38e147c5e60d3164b88bf08e71633997747"
+  version "4.64,RZVx2pDPIzebqfElELBcWw"
+  sha256 "e72e451e8b5eadb250c45ecd0cdeaf5ee9bff641466cf602b1f29c863c812d1f"
 
-  # lge.com/ was verified as official when first introduced to the cask
-  url "http://gscs-b2c.lge.com/downloadFile?fileId=#{version.after_comma}"
+  url "https://gscs-b2c.lge.com/downloadFile?fileId=#{version.after_comma}",
+      verified: "lge.com/"
   name "LG OnScreen Control"
+  desc "Displays all connected LG monitor information"
   homepage "https://www.lg.com/us/support/monitors"
+
+  livecheck do
+    skip "No version information available"
+  end
+
+  depends_on macos: ">= :mojave"
 
   pkg "OSC_V#{version.before_comma}_signed.pkg"
 

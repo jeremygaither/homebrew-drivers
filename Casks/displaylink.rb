@@ -6,11 +6,11 @@ cask "displaylink" do
     version "4.3.1,1251"
     sha256 "d5cd6787d6c4ca6a2425984bcbab607e618e9803335455e24196e14e35657b97"
   elsif MacOS.version <= :mojave
-    version "5.2.4,1581"
-    sha256 "5e5680f8497b77b7a8a0e4920a17791b2b388dc11046ef58070967ed524204cd"
+    version "5.2.5,1636"
+    sha256 "aa061f65ffb613c5138b88051f56da12825cfe217fa6ae589f7d5125981f76b7"
   else
-    version "5.2.4,1581"
-    sha256 "5e5680f8497b77b7a8a0e4920a17791b2b388dc11046ef58070967ed524204cd"
+    version "1.4,1715"
+    sha256 "7839fe5200ecb8f83c714a3195d54dffd2eb2969ee443f2cbc386ff28aeb93fc"
   end
 
   url "https://www.displaylink.com/downloads/file?id=#{version.after_comma}",
@@ -20,9 +20,23 @@ cask "displaylink" do
       },
       using: :post
   name "DisplayLink USB Graphics Software"
+  desc "Drivers for DisplayLink docks, adapters and monitors"
   homepage "https://www.displaylink.com/"
 
-  pkg "DisplayLink Software Installer.pkg"
+  livecheck do
+    skip "No version information available"
+  end
+
+  if MacOS.version <= :mojave
+    pkg "DisplayLink Software Installer.pkg"
+  else
+    container type: :pkg
+    preflight do
+      # Renames the downloaded file to the correct name
+      system("mv \"#{caskroom_path}/#{version}/file?id=#{version.after_comma}\" \"#{caskroom_path}/#{version}/DisplayLink Manager Graphics Connectivity #{version.before_comma}.pkg\"")
+    end
+    pkg "DisplayLink Manager Graphics Connectivity #{version.before_comma}.pkg"
+  end
 
   uninstall pkgutil:   "com.displaylink.*",
             # 'kextunload -b com.displaylink.driver.DisplayLinkDriver' causes kernel panic

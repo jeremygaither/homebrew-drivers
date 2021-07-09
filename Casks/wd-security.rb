@@ -1,11 +1,19 @@
 cask "wd-security" do
-  version "2.1.1.75"
-  sha256 "f62f06d5193c210e37a62cc23a22c0e7c2a673f6fe8e7bae0f85aa748d84f521"
+  version "2.1.1.81"
+  sha256 "d365a95e9dcad28b037fb1dbc79b3182a140f280f0d4a68c4dd00c5254e53af6"
 
   url "https://downloads.wdc.com/wdapp/WD_Security_Standalone_Installer_Mac_#{version.dots_to_underscores}.zip"
-  appcast "https://support.wdc.com/downloads.aspx?p=158"
   name "WD Security"
+  desc "Encryption software for WD drives"
   homepage "https://support.wdc.com/downloads.aspx?p=158"
+
+  livecheck do
+    url :homepage
+    strategy :page_match do |page|
+      v = page[%r{href=.*?/WD_Security_Standalone_Installer_Mac_(\d+(?:_\d+)*)\.zip}i, 1]
+      v.tr("_", ".")
+    end
+  end
 
   installer manual: "WD Security Installer.app"
 

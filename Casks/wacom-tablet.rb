@@ -1,37 +1,42 @@
 cask "wacom-tablet" do
-  version "6.3.40-2"
-  sha256 "4d8a1594ee2cb24af2ec1dcf381a68147be9c8fbed6a46e9f29494800eb7773a"
+  version "6.3.43-3"
+  sha256 "01fa8c89e1ba568223d2fa01bc0c702c84c7046baa18c7693d50887af005a18b"
 
   url "https://cdn.wacom.com/u/productsupport/drivers/mac/professional/WacomTablet_#{version}.dmg"
-  appcast "https://www.wacom.com/en-de/support/product-support/drivers"
-  name "Wacom Intuos 4/5/Pro Tablet"
+  name "Wacom Tablet"
+  desc "Resources for Wacom tablets"
   homepage "https://www.wacom.com/en-us/support/product-support/drivers"
 
-  conflicts_with cask: "wacom-intuos-3-tablet"
+  livecheck do
+    url :homepage
+    regex(%r{/WacomTablet[._-]?(\d+(?:\.\d+)+(?:[_-]\d+)?)\.dmg}i)
+  end
+
+  depends_on macos: ">= :high_sierra"
 
   pkg "Install Wacom Tablet.pkg"
 
-  uninstall launchctl: [
-    "com.wacom.wacomtablet",
-    "com.wacom.UpdateHelper",
-    "com.wacom.displayhelper",
-    "com.wacom.DataStoreMgr",
-    "com.wacom.DisplayMgr",
-  ],
+  uninstall pkgutil:   "com.wacom.TabletInstaller",
             quit:      [
               "com.wacom.DisplayMgr",
               "com.wacom.RemoveWacomTablet",
               "com.wacom.TabletDriver",
               "com.wacom.Wacom-Desktop-Center",
+              "com.wacom.wacomtablet",
               "com.wacom.WacomTouchDriver",
+            ],
+            launchctl: [
+              "com.wacom.DataStoreMgr",
+              "com.wacom.displayhelper",
+              "com.wacom.IOManager",
+              "com.wacom.UpdateHelper",
               "com.wacom.wacomtablet",
             ],
             kext:      [
               "com.wacom.kext.ftdi",
               "com.wacom.kext.wacomtablet",
             ],
-            pkgutil:   "com.wacom.TabletInstaller",
-            delete:    "/Applications/Wacom Tablet.localized"
+            delete:    "/Applications/Wacom Tablet.localized/"
 
   zap trash: [
     "~/Library/Application Scripts/com.wacom.DataStoreMgr",

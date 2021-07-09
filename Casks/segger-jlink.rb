@@ -1,18 +1,40 @@
 cask "segger-jlink" do
-  version "6.82f"
-  sha256 "5f4a6d940ae7a0abc5d944fa59f0f4a3ef3dba9755ff6d8832f6c41fa68746e9"
+  version "7.50a"
 
-  url "https://www.segger.com/downloads/jlink/JLink_MacOSX_V#{version.no_dots}.pkg",
-      using: :post,
-      data:  {
-        "accept_license_agreement" => "accepted",
-        "non_emb_ctr"              => "confirmed",
-        "submit"                   => "Download software",
-      }
+  if Hardware::CPU.intel?
+    sha256 "382cdb0df1b4c9d40c507fae5201a23f9d76065a14192a59ade7901bcddbcebe"
+
+    url "https://www.segger.com/downloads/jlink/JLink_MacOSX_V#{version.no_dots}_x86_64.pkg",
+        using: :post,
+        data:  {
+          "accept_license_agreement" => "accepted",
+          "non_emb_ctr"              => "confirmed",
+          "submit"                   => "Download software",
+        }
+
+    pkg "JLink_MacOSX_V#{version.no_dots}_x86_64.pkg"
+  else
+    sha256 "cfcc348ace32363d9b2d7fca3149c3c578bd1512eefe023a83b30b04bd5983a5"
+
+    url "https://www.segger.com/downloads/jlink/JLink_MacOSX_V#{version.no_dots}_arm64.pkg",
+        using: :post,
+        data:  {
+          "accept_license_agreement" => "accepted",
+          "non_emb_ctr"              => "confirmed",
+          "submit"                   => "Download software",
+        }
+
+    pkg "JLink_MacOSX_V#{version.no_dots}_arm64.pkg"
+  end
+
   name "Segger J-Link Command Line Tools"
+  desc "Software and Documentation pack for Segger J-Link debug probes"
   homepage "https://www.segger.com/downloads/jlink"
 
-  pkg "JLink_MacOSX_V#{version.no_dots}.pkg"
+  livecheck do
+    url "https://www.segger.com/downloads/jlink/ReleaseNotes_JLink.html"
+    regex(/Version\s*V(\d+(?:\.\d+[a-z]?)*)/i)
+  end
 
   uninstall quit:    [
     "com.segger.JFlashLite.*",

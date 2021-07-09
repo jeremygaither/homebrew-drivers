@@ -1,11 +1,11 @@
 cask "qmk-toolbox" do
-  version "0.0.19"
-  sha256 "dfcb04fd89f01514d5e9309d7619a8c91aee5a0b708bf870448711f9d689f175"
+  version "0.0.21"
+  sha256 "22d9eea172f7c6947e59df3a884d22d626c1b1fa37ab91df06d86c8751e48af6"
 
-  # github.com/qmk/qmk_toolbox/ was verified as official when first introduced to the cask
-  url "https://github.com/qmk/qmk_toolbox/releases/download/#{version}/QMK.Toolbox.app.zip"
-  appcast "https://github.com/qmk/qmk_toolbox/releases.atom"
+  url "https://github.com/qmk/qmk_toolbox/releases/download/#{version}/QMK.Toolbox.app.zip",
+      verified: "github.com/qmk/qmk_toolbox/"
   name "QMK Toolbox"
+  desc "Toolbox companion for QMK Firmware"
   homepage "https://qmk.fm/"
 
   app "QMK Toolbox.app"
